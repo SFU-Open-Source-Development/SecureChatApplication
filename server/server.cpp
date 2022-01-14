@@ -1,3 +1,10 @@
+//
+// Copyright (c) 2003-2021 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+
 #include <cstdlib>
 #include <iostream>
 #include <boost/bind/bind.hpp>
@@ -27,6 +34,8 @@ public:
   }
 
 private:
+
+  //handle_read and handle_write is used to echo messages it has received
   void handle_read(const boost::system::error_code& error,
       size_t bytes_transferred)
   {
@@ -72,7 +81,7 @@ public:
     : io_context_(io_context),
       acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
   {
-    //when acceptor receives a transmission, it will start a session with the sender?
+    //when acceptor receives a transmission, it will start a session with the sender
     start_accept();
   }
 
@@ -85,6 +94,7 @@ private:
           boost::asio::placeholders::error));
   }
 
+  //will continue to try to start a session until there's no error
   void handle_accept(session* new_session,
       const boost::system::error_code& error)
   {
